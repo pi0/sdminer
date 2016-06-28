@@ -34,7 +34,7 @@ var app = new Vue({
 	'el':'#app',
 	data:{
 
-		url:'http://private-a1e9a-sdminer.apiary-mock.com',
+		url:'https://private-a1e9a-sdminer.apiary-mock.com',
 		sessions:'',
 		session_number:0,
 
