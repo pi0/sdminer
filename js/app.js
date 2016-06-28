@@ -44,6 +44,10 @@ var app = new Vue({
 		reload: function() {
 			app.getSessionStatus();
 		},
+		
+		implementMe: function() {
+			alert("Implement Me :D");
+		},
 	
 		getSessionStatus: function() {
 			$.ajax({url: app.url+'/sessions',dataType:'json',success:function(d){

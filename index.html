@@ -11,8 +11,8 @@
   <div class="w3-container">
     <h5>Menu</h5>
   </div>
-  <a href="#" id="default-tab" class="tablink" onclick="openTab(event, 'Sessions')">Sessions</a>
-  <a href="#" class="tablink" onclick="openTab(event, 'Job Descriptor')">Job Descriptor</a>
+  <a href="#"  class="tablink" onclick="openTab(event, 'Sessions')">Sessions</a>
+  <a href="#" id="default-tab" class="tablink" onclick="openTab(event, 'Job Descriptor')">Job Descriptor</a>
   <a href="#" class="tablink" onclick="openTab(event, 'Jobs')">Jobs</a>
 </nav>
 
@@ -46,9 +46,9 @@
 	<label class="w3-label">Session Number</label>
 	<input class="w3-input" type="text" v-model="session_number">
 	<br>
-	<button class="w3-btn w3-hover-blue">Start New Session</button>
+	<button class="w3-btn w3-hover-blue" @click="implementMe">Start New Session</button>
 	<br><br>
-	<button class="w3-btn w3-hover-blue">Delete Session</button>
+	<button class="w3-btn w3-hover-blue" @click="implementMe">Delete Session</button>
   </div>
 
   <div id="Job Descriptor" class="w3-container city w3-animate-left">
@@ -59,9 +59,11 @@
 		</div>
 
 		<form class="w3-container">
-		
+		<br>
 		<label class="w3-label">Select Jar File</label>
+		<br>
 		<input class="w3-hover-blue" type='file' name='userFile'>
+		<br>
 		<!--
 		<div class="w3-dropdown-hover">
 		  <button class="w3-btn w3-blue">Algorithm</button>
