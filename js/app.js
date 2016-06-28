@@ -34,24 +34,24 @@ var app = new Vue({
 	'el':'#app',
 	data:{
 
-		url:'http://localhost:8998',
+		url:'http://private-a1e9a-sdminer.apiary-mock.com',
 		sessions:'',
+		session_number:0,
 
 	},
 	methods:{
 
+		reload: function() {
+			app.getSessionStatus();
+		},
+	
 		getSessionStatus: function() {
-
-			$.ajax({
-				url: app.url+'/sessions',
-				dataType:'json',
-				success: function(d) {
-					app.sessions=d;
-					console.log(d);
-				}
-			})
-
-		}
+			$.ajax({url: app.url+'/sessions',dataType:'json',success:function(d){
+				app.sessions=d;
+			}});
+		},
 
 	}
 });
+
+app.reload();

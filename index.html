@@ -17,7 +17,9 @@
 </nav>
 
 <div style="margin-left:130px">
-  <div class="w3-padding">SDMiner: &nbsp;a Tool for Mining Data Streams on top of Apache Spark</div>
+  <div class="w3-padding">
+  <a href="https://github.com/pi0/sdminer">SDMiner</a> &nbsp;a Tool for Mining Data Streams on top of Apache Spark
+  </div>
 
   <div id="Sessions" class="w3-container city w3-animate-left">
     <h2>Sessions</h2>
@@ -25,24 +27,27 @@
 	<button class="w3-btn w3-hover-blue" @click="getSessionStatus">Get Sessions Status</button>
 	<div class="w3-textarea">
 			<h2>Total Sessions: {{sessions.total}} </h2>
-			<table>
+			<table class="w3-table">
 				<tr>
 					<th>ID</th>
 					<th>Kind</th>
-					<th>Owner</th>
 					<th>State</th>
 				</tr>
 				<tr v-for="session in sessions.sessions">
 					<td>{{session.id}}</td>
 					<td>{{session.kind}}</td>
-					<td>{{session.owner}}</td>
 					<td>{{session.state}}</td>
 				</tr>
 			</table>
 		</div>
-	<button class="w3-btn w3-hover-blue">Start New Session</button><br/>
+		
+	<hr>
+		
 	<label class="w3-label">Session Number</label>
-		<input class="w3-input" type="text">
+	<input class="w3-input" type="text" v-model="session_number">
+	<br>
+	<button class="w3-btn w3-hover-blue">Start New Session</button>
+	<br><br>
 	<button class="w3-btn w3-hover-blue">Delete Session</button>
   </div>
 
@@ -73,11 +78,8 @@
 		<label class="w3-label">Parameters</label>
 		<input class="w3-input" type="text">
 		<br/>
-		<label class="w3-label">host</label>
-		<input class="w3-input" type="text">
-		<br/>
-		<label class="w3-label">port</label>
-		<input class="w3-input" type="text">
+		<label class="w3-label">API URL</label>
+		<input class="w3-input" type="text" v-model="url">
 		<br/>
 		<button class="w3-btn w3-blue">Run</button>
 		</form>
