@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<title>SDMiner: Mining Data Streams on top of Apache Spark</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="css/w3.css">
+<link rel="stylesheet" href="css/app.css">
+
+<body id="app">
+
+<nav class="w3-sidenav w3-black w3-card-2" style="width:130px">
+  <div class="w3-container">
+    <h5>Menu</h5>
+  </div>
+  <a href="#" id="default-tab" class="tablink" onclick="openTab(event, 'Sessions')">Sessions</a>
+  <a href="#" class="tablink" onclick="openTab(event, 'Job Descriptor')">Job Descriptor</a>
+  <a href="#" class="tablink" onclick="openTab(event, 'Jobs')">Jobs</a>
+</nav>
+
+<div style="margin-left:130px">
+  <div class="w3-padding">SDMiner: &nbsp;a Tool for Mining Data Streams on top of Apache Spark</div>
+
+  <div id="Sessions" class="w3-container city w3-animate-left">
+    <h2>Sessions</h2>
+    <p>Use this section for creating and managing Spark Sessions.</p>
+	<button class="w3-btn w3-hover-blue" @click="getSessionStatus">Get Sessions Status</button>
+	<div class="w3-textarea">
+			<h2>Total Sessions: {{sessions.total}} </h2>
+			<table>
+				<tr>
+					<th>ID</th>
+					<th>Kind</th>
+					<th>Owner</th>
+					<th>State</th>
+				</tr>
+				<tr v-for="session in sessions.sessions">
+					<td>{{session.id}}</td>
+					<td>{{session.kind}}</td>
+					<td>{{session.owner}}</td>
+					<td>{{session.state}}</td>
+				</tr>
+			</table>
+		</div>
+	<button class="w3-btn w3-hover-blue">Start New Session</button><br/>
+	<label class="w3-label">Session Number</label>
+		<input class="w3-input" type="text">
+	<button class="w3-btn w3-hover-blue">Delete Session</button>
+  </div>
+
+  <div id="Job Descriptor" class="w3-container city w3-animate-left">
+    <h2>Job Descriptor</h2>
+    <div class="w3-card-4">
+		<div class="w3-container w3-blue">
+		  <h2>New Job Descriptor</h2>
+		</div>
+
+		<form class="w3-container">
+		
+		<label class="w3-label">Select Jar File</label>
+		<input class="w3-hover-blue" type='file' name='userFile'>
+		<!--
+		<div class="w3-dropdown-hover">
+		  <button class="w3-btn w3-blue">Algorithm</button>
+		  <div class="w3-dropdown-content w3-border">
+			<a href="#">DSFR -PreIndexed</a>
+			<a href="#">DSFR -WithState</a>
+		  </div>
+		</div>
+		-->
+		<br/>
+		<label class="w3-label">Class Name</label>
+		<input class="w3-input" type="text">
+		<br/>
+		<label class="w3-label">Parameters</label>
+		<input class="w3-input" type="text">
+		<br/>
+		<label class="w3-label">host</label>
+		<input class="w3-input" type="text">
+		<br/>
+		<label class="w3-label">port</label>
+		<input class="w3-input" type="text">
+		<br/>
+		<button class="w3-btn w3-blue">Run</button>
+		</form>
+		<br/>
+		<div class="w3-textarea">
+			<textarea rows="4" cols="150" readonly>
+				
+			</textarea><br>
+		</div>
+		<button class="w3-btn w3-blue">End Job</button>
+</div>
+  </div>
+
+  <div id="Jobs" class="w3-container city w3-animate-left">
+    <h2>Jobs</h2>
+    <p>Running Jobs will be shown here.</p>
+    <button class="w3-btn w3-hover-blue">Get Jobs Status</button>
+	<div class="w3-textarea">
+			<textarea rows="4" cols="150" readonly>
+				
+			</textarea><br>
+		</div>
+		<label class="w3-label">Job Number</label>
+		<input class="w3-input" type="text">
+	<button class="w3-btn w3-hover-blue">Delete Job</button>
+  </div>
+
+</div>
+
+
+<script src="js/vue.js"></script>
+<script src="js/jquery.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
+

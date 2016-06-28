@@ -1,0 +1,112 @@
+FORMAT: 1A
+HOST: http://localhost:8998/
+
+# SDMiner
+
+## sessions [/sessions]
+
+### get sessions[GET]
+
++ Response 200 (application/json)
+
+        {
+            "from": 0,
+            "sessions": [
+                {
+                    "id": 2,
+                    "kind": "spark",
+                    "log": [],
+                    "owner": null,
+                    "proxyUser": null,
+                    "state": "starting"
+                },
+                {
+                    "id": 1,
+                    "kind": "spark",
+                    "log": [],
+                    "owner": null,
+                    "proxyUser": null,
+                    "state": "idle"
+                },
+                {
+                    "id": 0,
+                    "kind": "spark",
+                    "log": [],
+                    "owner": null,
+                    "proxyUser": null,
+                    "state": "idle"
+                }
+            ],
+            "total": 3
+        }
+
+### post sessions[POST]
+
++ Request (application/json)
+
+        {
+            "kind": "spark"
+        }
+
++ Response 200 (application/json)
+
+        {
+            "id":2,
+            "owner":null,
+            "proxyUser":null,
+            "state":"starting",
+            "kind":"spark",
+            "log":[]
+        }
+
+
+## batches [/batches]
+
+### batch status[GET]
+
++ Response 200 (application/json)
+
+        {
+            "from": 0,
+            "sessions": [
+                {
+                    "id": 0,
+                    "log": [
+                        "Current Sample: 0 0 0 0 0 0 0 0 0 0",
+                        "Current Sample: 0 0 0 0 0 0 0 0 0 0",
+                        "Current Sample: 0 0 0 0 0 0 0 0 0 0",
+                        "Current Sample: 0 0 0 0 0 0 0 0 0 0",
+                        "Current Sample: 0 0 0 0 0 0 0 0 0 0",
+                        "Current Sample: 0 0 0 0 0 0 0 0 0 0",
+                        "Current Sample: 0 0 0 0 0 0 0 0 0 0",
+                        "Current Sample: 0 0 0 0 0 0 0 0 0 0",
+                        "Current Sample: 0 0 0 0 0 0 0 0 0 0",
+                        "Current Sample: 0 0 0 0 0 0 0 0 0 0"
+                    ],
+                    "state": "running"
+                }
+            ],
+            "total": 1
+        }
+
+
+### post batch [POST]
+
++ Request (application/json)
+
+        {
+            "file": "/home/sinash/ssdirty.jar", 
+            "className": "DistributedRandomSamplingFixedReservoir", 
+            "args": ["localhost", "9999", "2", "10"]
+        }
+
++ Response 200 (application/json)
+
+        {
+            "id":2,
+            "owner":null,
+            "proxyUser":null,
+            "state":"starting",
+            "kind":"spark",
+            "log":[]
+        }
