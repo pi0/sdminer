@@ -58,7 +58,7 @@ var app = new Vue({
 	'el':'#app',
 	data:{
 		//url:'https://private-a1e9a-sdminer.apiary-mock.com',
-		url:'http://192.168.169.228:8998',
+		url:'http://localhost:8998',
 		sessions:'',
 		session_number:0,
 		class_name:'DistributedRandomSamplingFixedReservoir',
@@ -97,6 +97,7 @@ var app = new Vue({
 				//console.log("Batches Loaded!");
 				app.u();
 				app.batches=JSON.stringify(d,null, "\t");
+				app.batches_j=d;
 			}});
 		},
 		
@@ -106,6 +107,10 @@ var app = new Vue({
 		
 		deleteSession: function(id) {
 			post(app.url+'/sessions/'+id,{kind:'spark'},app.getSessionStatus,"DELETE");
+		},
+		
+		deleteBatch: function() {
+			post(app.url+'/batches/'+app.batches_j.sessions[0].id,{kind:'spark'},app.getSessionStatus,"DELETE");
 		},
 		
 		sendBatch: function() {
