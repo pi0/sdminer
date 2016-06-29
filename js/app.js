@@ -33,11 +33,13 @@ $(document).ready(function(){
 var app = new Vue({
 	'el':'#app',
 	data:{
-
 		url:'https://private-a1e9a-sdminer.apiary-mock.com',
 		sessions:'',
 		session_number:0,
-
+		class_name:'DistributedRandomSamplingFixedReservoir',
+		args:'localhost,9999,2,10',
+		file_name:'/home/sinash/ssdirty.jar',
+		result:null
 	},
 	methods:{
 
@@ -54,8 +56,33 @@ var app = new Vue({
 				app.sessions=d;
 			}});
 		},
+		
+		sendBatch: function() {
+			var data= {
+				file: $('#userFile').val(),
+				className: app.class_name,
+				args: app.args.split(','),
+			};
+			
+			app.result={};
+			app.result.id='';
+			app.result.kind='';
+			app.result.state='Sending request...'
+			
+			console.log(data);//TODO batch
+			$.ajax({url: app.url+'/batch',type:"POST",data:data,dataType:'json',success:function(d){
+				console.log(d);
+				app.result=d;
+			}});
+		},
+		
+		 
 
 	}
 });
 
 app.reload();
+
+$('#userFile').change( function(event) {
+app.file_name=$(this).val()
+});

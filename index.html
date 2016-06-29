@@ -12,8 +12,8 @@
     <h5>Menu</h5>
   </div>
   <a href="#"  class="tablink" onclick="openTab(event, 'Sessions')">Sessions</a>
-  <a href="#" id="default-tab" class="tablink" onclick="openTab(event, 'Job Descriptor')">Job Descriptor</a>
-  <a href="#" class="tablink" onclick="openTab(event, 'Jobs')">Jobs</a>
+  <a href="#" class="tablink" onclick="openTab(event, 'Job Descriptor')">Job Descriptor</a>
+  <a href="#" id="default-tab" class="tablink" onclick="openTab(event, 'Jobs')">Jobs</a>
 </nav>
 
 <div style="margin-left:130px">
@@ -58,11 +58,12 @@
 		  <h2>New Job Descriptor</h2>
 		</div>
 
-		<form class="w3-container">
+		<div class="w3-container">
 		<br>
 		<label class="w3-label">Select Jar File</label>
 		<br>
-		<input class="w3-hover-blue" type='file' name='userFile'>
+		<input class="w3-hover-blue" type='file' name='userFile' id="userFile">
+		<input class="w3-input" type="text" v-model="file_name" >
 		<br>
 		<!--
 		<div class="w3-dropdown-hover">
@@ -75,38 +76,43 @@
 		-->
 		<br/>
 		<label class="w3-label">Class Name</label>
-		<input class="w3-input" type="text">
+		<input class="w3-input" type="text" v-model="class_name" >
 		<br/>
 		<label class="w3-label">Parameters</label>
-		<input class="w3-input" type="text">
+		<input class="w3-input" type="text" v-model="args">
 		<br/>
 		<label class="w3-label">API URL</label>
 		<input class="w3-input" type="text" v-model="url">
 		<br/>
-		<button class="w3-btn w3-blue">Run</button>
-		</form>
-		<br/>
-		<div class="w3-textarea">
-			<textarea rows="4" cols="150" readonly>
-				
-			</textarea><br>
+		<button class="w3-btn w3-blue" @click="sendBatch">Run</button>
 		</div>
-		<button class="w3-btn w3-blue">End Job</button>
+		<br/>
+		<div v-if="result!=null">
+			<h2>Job Result:</h2>
+			<h3>ID: {{result.id}}</h3>
+			<h3>State: {{result.state}}</h3>
+			<h3>Kind: {{result.kind}}</h3>
+		</div>
+		<button class="w3-btn w3-blue" @click="implementMe">End Job</button>
 </div>
   </div>
 
   <div id="Jobs" class="w3-container city w3-animate-left">
     <h2>Jobs</h2>
     <p>Running Jobs will be shown here.</p>
-    <button class="w3-btn w3-hover-blue">Get Jobs Status</button>
+    <button class="w3-btn w3-hover-blue" @click="getJobs">Get Jobs Status</button>
+	<br><br>
+	
 	<div class="w3-textarea">
 			<textarea rows="4" cols="150" readonly>
 				
 			</textarea><br>
 		</div>
-		<label class="w3-label">Job Number</label>
+		<hr>
+		<label class="w3-label" v-model="job_number">Job Number</label>
 		<input class="w3-input" type="text">
-	<button class="w3-btn w3-hover-blue">Delete Job</button>
+		<br><br>
+	<button class="w3-btn w3-hover-blue" @click="implementMe">Delete Job</button>
   </div>
 
 </div>
