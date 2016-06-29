@@ -24,6 +24,11 @@ function eventFire(el, etype){
   }
 }
 
+String.prototype.replaceAll = function(search, replacement) {
+    var target = this;
+    return target.replace(new RegExp(search, 'g'), replacement);
+};
+
 // Default Tab
 $(document).ready(function(){
 	eventFire(document.getElementById('default-tab'), 'click');
@@ -39,7 +44,8 @@ var app = new Vue({
 		class_name:'DistributedRandomSamplingFixedReservoir',
 		args:'localhost,9999,2,10',
 		file_name:'/home/sinash/ssdirty.jar',
-		result:null
+		result:null,
+		batches:'',
 	},
 	methods:{
 
@@ -55,6 +61,13 @@ var app = new Vue({
 			$.ajax({url: app.url+'/sessions',dataType:'json',success:function(d){
 				app.sessions=d;
 			}});
+		},
+		
+		getJobs: function() {
+			$.ajax({url: app.url+'/batches',dataType:'json',success:function(d){
+					app.batches=JSON.stringify(d).replaceAll(',',',\r\n');
+			}});
+		
 		},
 		
 		sendBatch: function() {

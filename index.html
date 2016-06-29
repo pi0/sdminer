@@ -12,8 +12,8 @@
     <h5>Menu</h5>
   </div>
   <a href="#"  class="tablink" onclick="openTab(event, 'Sessions')">Sessions</a>
-  <a href="#" class="tablink" onclick="openTab(event, 'Job Descriptor')">Job Descriptor</a>
-  <a href="#" id="default-tab" class="tablink" onclick="openTab(event, 'Jobs')">Jobs</a>
+  <a href="#" id="default-tab" class="tablink" onclick="openTab(event, 'Job Descriptor')">Job Descriptor</a>
+  <a href="#" class="tablink" onclick="openTab(event, 'Jobs')">Jobs</a>
 </nav>
 
 <div style="margin-left:130px">
@@ -104,13 +104,12 @@
 	<br><br>
 	
 	<div class="w3-textarea">
-			<textarea rows="4" cols="150" readonly>
-				
-			</textarea><br>
+			<pre>{{batches}}<pre>
+			<br>
 		</div>
 		<hr>
-		<label class="w3-label" v-model="job_number">Job Number</label>
-		<input class="w3-input" type="text">
+		<label class="w3-label">Job Number</label>
+		<input class="w3-input" type="text" v-model="job_number">
 		<br><br>
 	<button class="w3-btn w3-hover-blue" @click="implementMe">Delete Job</button>
   </div>
