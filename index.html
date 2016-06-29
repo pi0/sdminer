@@ -11,14 +11,15 @@
   <div class="w3-container">
     <h5>Menu</h5>
   </div>
-  <a href="#"  class="tablink" onclick="openTab(event, 'Sessions')">Sessions</a>
-  <a href="#" id="default-tab" class="tablink" onclick="openTab(event, 'Job Descriptor')">Job Descriptor</a>
+  <a href="#"  id="default-tab" class="tablink" onclick="openTab(event, 'Sessions')">Sessions</a>
+  <a href="#"  class="tablink" onclick="openTab(event, 'Job Descriptor')">Job Descriptor</a>
   <a href="#" class="tablink" onclick="openTab(event, 'Jobs')">Jobs</a>
 </nav>
 
 <div style="margin-left:130px">
   <div class="w3-padding">
   <a href="https://github.com/pi0/sdminer">SDMiner</a> &nbsp;a Tool for Mining Data Streams on top of Apache Spark
+  (Last update:{{lastUpdate}})
   </div>
 
   <div id="Sessions" class="w3-container city w3-animate-left">
@@ -37,18 +38,16 @@
 					<td>{{session.id}}</td>
 					<td>{{session.kind}}</td>
 					<td>{{session.state}}</td>
+					<td><button @click="deleteSession(session.id)" class="w3-btn w3-hover-blue">Delete</button></td>
 				</tr>
 			</table>
 		</div>
 		
 	<hr>
-		
-	<label class="w3-label">Session Number</label>
-	<input class="w3-input" type="text" v-model="session_number">
-	<br>
-	<button class="w3-btn w3-hover-blue" @click="implementMe">Start New Session</button>
-	<br><br>
-	<button class="w3-btn w3-hover-blue" @click="implementMe">Delete Session</button>
+	
+
+	<button class="w3-btn w3-hover-blue" @click="startSession">Start New Session</button>
+
   </div>
 
   <div id="Job Descriptor" class="w3-container city w3-animate-left">
@@ -104,7 +103,7 @@
 	<br><br>
 	
 	<div class="w3-textarea">
-			<pre>{{batches}}<pre>
+			<pre>{{batches}}</pre>
 			<br>
 		</div>
 		<hr>

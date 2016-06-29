@@ -29,6 +29,25 @@ String.prototype.replaceAll = function(search, replacement) {
     return target.replace(new RegExp(search, 'g'), replacement);
 };
 
+$.ajaxPrefilter(function(options, originalOptions, jqXHR) {
+    if (options.url.match(/^https?:/)) {
+		options.headers={};
+        options.headers['X-Proxy-URL'] = options.url;
+        options.url = './ajax.php';
+    }
+});
+
+
+function post(url,data,cb,type){
+	if(type==null)type="POST";
+	data = JSON.stringify(data);
+	console.log(data);
+	$.ajax({url: url,datatype : "json",contentType: "application/json",data:data,type:type,dataType:'json',success:function(d){
+		console.log(d);
+		if(cb!=null)cb(d)
+	}});
+}
+
 // Default Tab
 $(document).ready(function(){
 	eventFire(document.getElementById('default-tab'), 'click');
@@ -38,7 +57,8 @@ $(document).ready(function(){
 var app = new Vue({
 	'el':'#app',
 	data:{
-		url:'https://private-a1e9a-sdminer.apiary-mock.com',
+		//url:'https://private-a1e9a-sdminer.apiary-mock.com',
+		url:'http://192.168.169.228:8998',
 		sessions:'',
 		session_number:0,
 		class_name:'DistributedRandomSamplingFixedReservoir',
@@ -46,11 +66,18 @@ var app = new Vue({
 		file_name:'/home/sinash/ssdirty.jar',
 		result:null,
 		batches:'',
+		lastUpdate:'',
 	},
 	methods:{
 
 		reload: function() {
 			app.getSessionStatus();
+			app.getJobs();
+			
+		},
+		
+		u: function() {
+			app.lastUpdate=new Date();
 		},
 		
 		implementMe: function() {
@@ -59,20 +86,31 @@ var app = new Vue({
 	
 		getSessionStatus: function() {
 			$.ajax({url: app.url+'/sessions',dataType:'json',success:function(d){
+				//console.log("Sessions Loaded!");
+				app.u();
 				app.sessions=d;
 			}});
 		},
 		
 		getJobs: function() {
 			$.ajax({url: app.url+'/batches',dataType:'json',success:function(d){
-					app.batches=JSON.stringify(d).replaceAll(',',',\r\n');
+				//console.log("Batches Loaded!");
+				app.u();
+				app.batches=JSON.stringify(d,null, "\t");
 			}});
+		},
 		
+		startSession: function() {
+			post(app.url+'/sessions',{kind:'spark'},app.getSessionStatus);
+		},
+		
+		deleteSession: function(id) {
+			post(app.url+'/sessions/'+id,{kind:'spark'},app.getSessionStatus,"DELETE");
 		},
 		
 		sendBatch: function() {
 			var data= {
-				file: $('#userFile').val(),
+				file: app.file_name,
 				className: app.class_name,
 				args: app.args.split(','),
 			};
@@ -82,11 +120,8 @@ var app = new Vue({
 			app.result.kind='';
 			app.result.state='Sending request...'
 			
-			console.log(data);//TODO batch
-			$.ajax({url: app.url+'/batch',type:"POST",data:data,dataType:'json',success:function(d){
-				console.log(d);
-				app.result=d;
-			}});
+			post(app.url+'/batches',data,function(d){app.result=d;});
+			
 		},
 		
 		 
@@ -96,6 +131,8 @@ var app = new Vue({
 
 app.reload();
 
+setInterval(app.reload,1000);
+
 $('#userFile').change( function(event) {
-app.file_name=$(this).val()
+	app.file_name=$(this).val()
 });

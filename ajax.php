@@ -18,7 +18,7 @@ define('CSAJAX_FILTERS', true);
  * If set to false, $valid_requests should hold the whole URL ( without the parameters ) i.e. http://example.com/this/is/long/url/
  * Recommended value: false (for security reasons - do not forget that anyone can access your proxy)
  */
-define('CSAJAX_FILTER_DOMAIN', false);
+define('CSAJAX_FILTER_DOMAIN', true);
 
 /**
  * Set debugging to true to receive additional messages - really helpful on development
@@ -104,10 +104,10 @@ if (preg_match('!' . $_SERVER['SCRIPT_NAME'] . '!', $request_url) || empty($requ
 if (CSAJAX_FILTERS) {
     $parsed = $p_request_url;
     if (CSAJAX_FILTER_DOMAIN) {
-        if (!in_array($parsed['host'], $valid_requests)) {
-            csajax_debug_message('Invalid domain - ' . $parsed['host'] . ' does not included in valid requests');
-            exit;
-        }
+        //if (!in_array($parsed['host'], $valid_requests)) {
+          //  csajax_debug_message('Invalid domain - ' . $parsed['host'] . ' does not included in valid requests');
+           // exit;
+        //}
     } else {
         $check_url = isset($parsed['scheme']) ? $parsed['scheme'] . '://' : '';
         $check_url .= isset($parsed['user']) ? $parsed['user'] . ($parsed['pass'] ? ':' . $parsed['pass'] : '') . '@' : '';
